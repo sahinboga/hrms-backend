@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import com.hrms.hrms.business.abstracts.AuthService;
 import com.hrms.hrms.business.abstracts.EmployerService;
 import com.hrms.hrms.business.abstracts.JobSeekerService;
+import com.hrms.hrms.business.abstracts.ResumeService;
 import com.hrms.hrms.business.abstracts.UserService;
 import com.hrms.hrms.core.utilities.business.BusinessRules;
 import com.hrms.hrms.core.utilities.result.DataResult;
@@ -16,6 +17,7 @@ import com.hrms.hrms.core.utilities.result.SuccessResult;
 import com.hrms.hrms.core.utilities.security.HashingHelper;
 import com.hrms.hrms.entities.concretes.Employer;
 import com.hrms.hrms.entities.concretes.JobSeeker;
+import com.hrms.hrms.entities.concretes.Resume;
 import com.hrms.hrms.entities.concretes.Role;
 import com.hrms.hrms.entities.concretes.User;
 import com.hrms.hrms.entities.dtos.UserForLoginDto;
@@ -27,13 +29,15 @@ public class AuthManager implements AuthService {
 	private JobSeekerService jobSeekerService;
 	private EmployerService employerService;
 	private UserService userService;
+	private ResumeService resumeService;
 	
 	@Autowired
-	public AuthManager(JobSeekerService jobSeekerService,EmployerService employerService,UserService userService) {
+	public AuthManager(JobSeekerService jobSeekerService,EmployerService employerService,UserService userService, ResumeService resumeService) {
 		super();
 		this.jobSeekerService = jobSeekerService;
 		this.employerService=employerService;
 		this.userService=userService;
+		this.resumeService = resumeService;
 	}
 	@Override
 	public DataResult<User> login(UserForLoginDto loginDto) throws Exception {
@@ -71,6 +75,11 @@ public class AuthManager implements AuthService {
 			this.userService.delete(userAddResult.getData());
 			return jobSeekerAddResult;
 		}
+		
+		Resume resume = new Resume();
+		resume.setJobSeeker(jobSeekerAddResult.getData());
+		resumeService.add(resume);
+		
 		return new SuccessResult("Kayıt başarılı.");
 	}
 
