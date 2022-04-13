@@ -8,4 +8,5 @@ import com.hrms.hrms.entities.concretes.Role;
 public interface RoleService {
 
 	DataResult<List<Role>> getAll();
+	DataResult<Role> add(Role entity) throws Exception;
 }

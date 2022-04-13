@@ -21,10 +21,17 @@ public class RoleManager implements RoleService {
 		super();
 		this.roleDao = roleDao;
 	}
+	
 	@Override
 	public DataResult<List<Role>> getAll() {
 		// TODO Auto-generated method stub
 		return new SuccessDataResult<List<Role>>(this.roleDao.findAll(),"Roller listelendi.");
+	}
+
+	@Override
+	public DataResult<Role> add(Role entity) throws Exception{
+		Role addRole=this.roleDao.save(entity);
+		return new SuccessDataResult<Role>(addRole,"Rol eklendi");
 	}
 
 }

@@ -31,8 +31,8 @@ public class DepartmentManager implements DepartmentService{
 
 	@Override
 	public DataResult<Department> add(Department entity) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		Department addDep=this.departmentDao.save(entity);
+		return new SuccessDataResult<Department>(addDep,"Bölüm eklendi");
 	}
 
 	@Override
