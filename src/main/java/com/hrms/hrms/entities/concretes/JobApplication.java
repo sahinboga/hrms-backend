@@ -39,6 +39,8 @@ public class JobApplication {
 	@JoinColumn(name="status_id")
 	private JobApplicationStatus status;
 	
+	@Column(name="application_date")
+	private LocalDate applicationDate;
 	
 	/*@Column(name="is_read")
 	private boolean isRead;

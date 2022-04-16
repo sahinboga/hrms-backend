@@ -1,5 +1,6 @@
 package com.hrms.hrms.business.concretes;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,6 +57,9 @@ public class JobApplicationManager implements JobApplicationService{
 		if(this.jobApplicationDao.existsByJobSeeker_IdAndJobAdvertisement_Id(application.getJobSeeker().getId(), application.getJobAdvertisement().getId())) {
 			return new ErrorResult("Bu ilana zaten başvuru yaptınız");
 		}
+		
+		LocalDate appDate= LocalDate.now();
+		application.setApplicationDate(appDate);
 		this.jobApplicationDao.save(application);
 		return new SuccessResult("Başvurunuz gerçekleştirildi");
 	}
