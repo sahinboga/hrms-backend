@@ -72,4 +72,10 @@ public class JobSeekerManager implements JobSeekerService {
 		return new SuccessResult();
 	}
 
+	@Override
+	public DataResult<JobSeeker> getJobSeekerById(int jsId) throws Exception {
+		
+		return new SuccessDataResult<JobSeeker>(this.jobSeekerDao.getJobSeekerById(jsId),"İş arayan getirildi");
+	}
+
 }

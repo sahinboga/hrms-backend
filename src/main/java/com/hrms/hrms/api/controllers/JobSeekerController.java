@@ -28,5 +28,11 @@ public class JobSeekerController extends BaseController{
 		 
 	}
 	
+	@GetMapping("/getjobseeker")
+	public ResponseEntity<?> getJobSeeker(int jsId){
+		 return Ok(()->this.jobSeekerService.getJobSeekerById(jsId));
+		 
+	}
+	
 	
 }
