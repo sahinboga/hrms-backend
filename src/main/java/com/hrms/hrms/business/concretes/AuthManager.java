@@ -20,6 +20,7 @@ import com.hrms.hrms.entities.concretes.JobSeeker;
 import com.hrms.hrms.entities.concretes.Resume;
 import com.hrms.hrms.entities.concretes.Role;
 import com.hrms.hrms.entities.concretes.User;
+import com.hrms.hrms.entities.dtos.AuthDto;
 import com.hrms.hrms.entities.dtos.UserForLoginDto;
 @Service
 public class AuthManager implements AuthService {
@@ -40,16 +41,33 @@ public class AuthManager implements AuthService {
 		this.resumeService = resumeService;
 	}
 	@Override
-	public DataResult<User> login(UserForLoginDto loginDto) throws Exception {
+	public DataResult<AuthDto> login(UserForLoginDto loginDto) throws Exception {
+		AuthDto authDto = new AuthDto();
 		DataResult<User> UserToCheck= this.userService.getByEmail(loginDto.getEmail());
 		if(UserToCheck.getData()==null) {
-			return new ErrorDataResult<User>("E-posta hatalı!");
+			return new ErrorDataResult<AuthDto>("E-posta hatalı!");
 		}
 		if(!HashingHelper.VerifyPasswordHash(loginDto.getPassword(), UserToCheck.getData().getPassword())) {
-			return new ErrorDataResult<User>("Şifre hatalı!");
+			return new ErrorDataResult<AuthDto>("Şifre hatalı!");
 		}
 		UserToCheck.getData().setPassword(null);
-		return new SuccessDataResult<User>(UserToCheck.getData(),"Giriş başarılı");
+		
+		Role role = UserToCheck.getData().getRole();
+		if(role.getId() == Role.JOBSEEKER().getId()) {
+			DataResult<JobSeeker> jobSeekerResult = jobSeekerService.getUserById(UserToCheck.getData().getUserId());
+			if(!jobSeekerResult.isSuccess()) {
+				return new ErrorDataResult<AuthDto>(jobSeekerResult.getMessage());
+			}
+			authDto.setUserData(jobSeekerResult.getData());
+		}
+		else if(role.getId() == Role.EMPLOYER().getId()) {
+			DataResult<Employer> employerResult = employerService.getEmployerByUserId(UserToCheck.getData().getUserId());
+			if(!employerResult.isSuccess()) {
+				return new ErrorDataResult<AuthDto>(employerResult.getMessage());
+			}
+			authDto.setUserData(employerResult.getData());
+		}
+		return new SuccessDataResult<AuthDto>(authDto,"Giriş başarılı");
 	}
 
 	@Override

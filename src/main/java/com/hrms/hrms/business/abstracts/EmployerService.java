@@ -10,6 +10,7 @@ public interface EmployerService extends CrudService<Employer> {
 	Result isNull(Employer employer) throws Exception;
 	Result validate(Employer employer) throws Exception;
 	DataResult<Employer> getEmployerById(int employerId) throws Exception;
+	DataResult<Employer> getEmployerByUserId(int userId) throws Exception;
 	Result uploadLogo(int id, Image image);
 	public Result deleteLogo(int id) throws Exception;
 }

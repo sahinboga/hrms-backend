@@ -6,4 +6,5 @@ import com.hrms.hrms.entities.concretes.JobSeeker;
 
 public interface JobSeekerDao extends JpaRepository<JobSeeker, Integer> {
 	JobSeeker getJobSeekerById(int jsId);
+	JobSeeker getJobSeekerByUser_userId(int userId);
 }

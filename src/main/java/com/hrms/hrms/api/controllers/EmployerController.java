@@ -46,6 +46,12 @@ public class EmployerController extends BaseController {
 		return Ok(()->this.employerService.getEmployerById(employerId));
 	}
 	
+	@GetMapping("/getemployerbyuserid")
+	public ResponseEntity<?> getEmployerByUserId(int userId){
+		
+		return Ok(()->this.employerService.getEmployerByUserId(userId));
+	}
+	
 	@PutMapping("/updateemployer")
 	public ResponseEntity<?> update(@RequestBody Employer employer){
 		return Ok(()->this.employerService.update(employer));

@@ -7,4 +7,5 @@ import com.hrms.hrms.entities.concretes.Employer;
 public interface EmployerDao extends JpaRepository<Employer, Integer> {
 	
 	Employer getEmployerById(int employerId);
+	Employer getEmployerByUser_userId(int userId);
 }

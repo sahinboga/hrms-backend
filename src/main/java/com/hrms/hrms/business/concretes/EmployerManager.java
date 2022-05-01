@@ -113,6 +113,12 @@ public class EmployerManager implements EmployerService {
 		this.employerDao.save(current);
 		return new SuccessResult("Fotoğraf kaldırıldı.");
 	}
+
+	@Override
+	public DataResult<Employer> getEmployerByUserId(int userId) throws Exception {
+		Employer employer=this.employerDao.getEmployerByUser_userId(userId);
+		return new SuccessDataResult<Employer>(employer);
+	}
 	
 
 }

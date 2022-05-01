@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.hrms.hrms.business.abstracts.JobSeekerService;
 
 
-@RequestMapping("/api/jobseekrs")
+@RequestMapping("/api/jobseekers")
 @RestController
 public class JobSeekerController extends BaseController{
 	
@@ -31,6 +31,12 @@ public class JobSeekerController extends BaseController{
 	@GetMapping("/getjobseeker")
 	public ResponseEntity<?> getJobSeeker(int jsId){
 		 return Ok(()->this.jobSeekerService.getJobSeekerById(jsId));
+		 
+	}
+	
+	@GetMapping("/getjobseekerbyuserid")
+	public ResponseEntity<?> getJobSeekerByUserId(int userId){
+		 return Ok(()->this.jobSeekerService.getUserById(userId));
 		 
 	}
 	
