@@ -7,5 +7,6 @@ import com.hrms.hrms.entities.concretes.Admin;
 
 public interface AdminService {
 	DataResult<List<Admin>>  getAll() throws Exception;
+	DataResult<Admin> add(Admin entity) throws Exception;
 	DataResult<Admin> getAdminByUserId(int userId) throws Exception;
 }

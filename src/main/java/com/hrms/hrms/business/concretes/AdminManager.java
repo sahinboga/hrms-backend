@@ -10,6 +10,7 @@ import com.hrms.hrms.core.utilities.result.DataResult;
 import com.hrms.hrms.core.utilities.result.SuccessDataResult;
 import com.hrms.hrms.dataAccess.abstracts.AdminDao;
 import com.hrms.hrms.entities.concretes.Admin;
+import com.hrms.hrms.entities.concretes.Role;
 
 @Service
 public class AdminManager implements AdminService{
@@ -33,6 +34,12 @@ public class AdminManager implements AdminService{
 		// TODO Auto-generated method stub
 		Admin admin=this.adminDao.getAdminByUser_userId(userId);
 		return new SuccessDataResult<Admin>(admin);
+	}
+
+	@Override
+	public DataResult<Admin> add(Admin entity) throws Exception {
+		Admin addAdmin=this.adminDao.save(entity);
+		return new SuccessDataResult<Admin>(addAdmin,"Admin eklendi");
 	}
 
 }
