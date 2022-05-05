@@ -18,6 +18,8 @@ public interface JobAdvertisementDao extends JpaRepository<JobAdvertisement, Int
 	
 	List<JobAdvertisement> getByIsActiveAndEmployer_Id(int isActive,int employerId);
 	
+	List<JobAdvertisement> getJobAdvertismentByEmployer_Id(int employerId);
+	
 	@Modifying
 	@Query("Update JobAdvertisement ja set ja.isActive = :active where ja.id = :id")
 	public void updateIsActive(@Param(value = "id") int id, @Param(value = "active") boolean isActive);

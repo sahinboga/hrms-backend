@@ -12,6 +12,8 @@ public interface JobAdvertisementService extends CrudService<JobAdvertisement> {
 	
 	DataResult<List<JobAdvertisement>> getByIsActiveAndEmployer_Id(boolean isActive,int employerId) throws Exception;
 	
+	DataResult<List<JobAdvertisement>> getJobAdvertisementByEmployer_Id(int employerId) throws Exception;
+	
 	DataResult<JobAdvertisement> passiveJobAdvertisement(int jobAdvertisementId,boolean active) throws Exception;
 	
 	void updateIsActive(boolean isActive, int id) throws Exception;

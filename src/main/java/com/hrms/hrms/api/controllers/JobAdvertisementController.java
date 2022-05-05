@@ -65,4 +65,9 @@ public class JobAdvertisementController extends BaseController{
 	public ResponseEntity<?> getFilterAndPage(int pageNo,int pageSize,@RequestBody JobAdvertFilter jobAdvertFilter){
 		return Ok(()-> this.jobAdvertisementService.getAllFilterAndPage(pageNo, pageSize, jobAdvertFilter));
 	}
+	
+	@GetMapping("/getemployerjobadvertisement")
+	public ResponseEntity<?> getJobAdvertismentByEmployerId(int employerId){
+		return Ok(()-> this.jobAdvertisementService.getJobAdvertisementByEmployer_Id(employerId));
+	}
 }

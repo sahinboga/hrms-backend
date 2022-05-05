@@ -37,4 +37,8 @@ public class Role {
 	public static final Role EMPLOYER() {
 		return new Role(2);
 	}
+	
+	public static final Role ADMIN() {
+		return new Role(1);
+	}
 }

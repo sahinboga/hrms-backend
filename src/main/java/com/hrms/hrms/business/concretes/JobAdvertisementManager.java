@@ -117,6 +117,13 @@ public class JobAdvertisementManager implements JobAdvertisementService{
 		return new SuccessDataResult<List<JobAdvertisement>>(jobAdvertisement.getContent(),jobAdvertisement.getTotalElements()+"");
 	}
 
+	@Override
+	public DataResult<List<JobAdvertisement>> getJobAdvertisementByEmployer_Id(int employerId) throws Exception {
+		
+		
+		return new SuccessDataResult<List<JobAdvertisement>>(this.jobAdvertisementDao.getJobAdvertismentByEmployer_Id(employerId),"Listelendi");
+	}
+
 	
 
 }
