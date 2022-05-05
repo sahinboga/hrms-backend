@@ -138,7 +138,7 @@ public class AuthManager implements AuthService {
 	}
 	@Override
 	public Result registerForAdmin(Admin admin) throws Exception {
-		Result result=BusinessRules.Run(this.userService.validate(admin.getUser()),this.employerService.validate(admin));
+		Result result=BusinessRules.Run(this.userService.validate(admin.getUser()),this.adminService.validate(admin));
 		if(result!=null) {
 			return result;
 		}

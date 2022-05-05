@@ -35,7 +35,7 @@ public class AdminController extends BaseController{
 	}
 	
 	@GetMapping("/getadminbyuserid")
-	public ResponseEntity<?> getEmployerByUserId(int userId){
+	public ResponseEntity<?> getAdminByUserId(int userId){
 		
 		return Ok(()->this.adminService.getAdminByUserId(userId));
 	}

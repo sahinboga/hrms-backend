@@ -6,8 +6,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.hrms.hrms.business.abstracts.AdminService;
+import com.hrms.hrms.core.utilities.business.BusinessRules;
 import com.hrms.hrms.core.utilities.result.DataResult;
+import com.hrms.hrms.core.utilities.result.ErrorResult;
+import com.hrms.hrms.core.utilities.result.Result;
 import com.hrms.hrms.core.utilities.result.SuccessDataResult;
+import com.hrms.hrms.core.utilities.result.SuccessResult;
 import com.hrms.hrms.dataAccess.abstracts.AdminDao;
 import com.hrms.hrms.entities.concretes.Admin;
 import com.hrms.hrms.entities.concretes.Role;
@@ -40,6 +44,24 @@ public class AdminManager implements AdminService{
 	public DataResult<Admin> add(Admin entity) throws Exception {
 		Admin addAdmin=this.adminDao.save(entity);
 		return new SuccessDataResult<Admin>(addAdmin,"Admin eklendi");
+	}
+
+	@Override
+	public Result validate(Admin admin) throws Exception {
+		Result result=BusinessRules.Run(isNull(admin));
+		if(result!=null) {
+			return result;
+		}
+		return new SuccessResult();
+	}
+
+	@Override
+	public Result isNull(Admin admin) throws Exception {
+		if(admin.getUser().getEmail().isBlank() || admin.getUser().getPassword().isBlank()) {
+				
+				return new ErrorResult("Tüm alanlar zorunludur!");
+			}
+			return new SuccessResult();
 	}
 
 }
