@@ -3,6 +3,7 @@ package com.hrms.hrms.business.concretes;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.hrms.hrms.business.abstracts.AdminService;
 import com.hrms.hrms.business.abstracts.AuthService;
 import com.hrms.hrms.business.abstracts.EmployerService;
 import com.hrms.hrms.business.abstracts.JobSeekerService;
@@ -15,6 +16,7 @@ import com.hrms.hrms.core.utilities.result.Result;
 import com.hrms.hrms.core.utilities.result.SuccessDataResult;
 import com.hrms.hrms.core.utilities.result.SuccessResult;
 import com.hrms.hrms.core.utilities.security.HashingHelper;
+import com.hrms.hrms.entities.concretes.Admin;
 import com.hrms.hrms.entities.concretes.Employer;
 import com.hrms.hrms.entities.concretes.JobSeeker;
 import com.hrms.hrms.entities.concretes.Resume;
@@ -29,16 +31,19 @@ public class AuthManager implements AuthService {
 
 	private JobSeekerService jobSeekerService;
 	private EmployerService employerService;
+	private AdminService adminService;
 	private UserService userService;
 	private ResumeService resumeService;
 	
 	@Autowired
-	public AuthManager(JobSeekerService jobSeekerService,EmployerService employerService,UserService userService, ResumeService resumeService) {
+	public AuthManager(JobSeekerService jobSeekerService,EmployerService employerService,UserService userService, ResumeService resumeService,
+			AdminService adminService) {
 		super();
 		this.jobSeekerService = jobSeekerService;
 		this.employerService=employerService;
 		this.userService=userService;
 		this.resumeService = resumeService;
+		this.adminService=adminService;
 	}
 	@Override
 	public DataResult<AuthDto> login(UserForLoginDto loginDto) throws Exception {
@@ -66,6 +71,13 @@ public class AuthManager implements AuthService {
 				return new ErrorDataResult<AuthDto>(employerResult.getMessage());
 			}
 			authDto.setUserData(employerResult.getData());
+		}
+		else if(role.getId() == Role.ADMIN().getId()) {
+			DataResult<Admin> adminResult = adminService.getAdminByUserId(UserToCheck.getData().getUserId());
+			if(!adminResult.isSuccess()) {
+				return new ErrorDataResult<AuthDto>(adminResult.getMessage());
+			}
+			authDto.setUserData(adminResult.getData());
 		}
 		return new SuccessDataResult<AuthDto>(authDto,"Giriş başarılı");
 	}
