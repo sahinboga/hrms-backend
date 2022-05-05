@@ -136,5 +136,27 @@ public class AuthManager implements AuthService {
 		}
 		return new SuccessResult("Kayıt başarılı.");
 	}
+	@Override
+	public Result registerForAdmin(Admin admin) throws Exception {
+		Result result=BusinessRules.Run(this.userService.validate(admin.getUser()),this.employerService.validate(admin));
+		if(result!=null) {
+			return result;
+		}
+		
+		admin.getUser().setRole(Role.ADMIN());
+		
+		DataResult<User> userAddResult= this.userService.add(admin.getUser());
+		if(!userAddResult.isSuccess()) {
+			return userAddResult;
+		}
+		
+		admin.getUser().setUserId(userAddResult.getData().getUserId());
+		DataResult<Admin> adminAddResult=this.adminService.add(admin);
+		if(!adminAddResult.isSuccess()) {
+			this.userService.delete(userAddResult.getData());
+			return adminAddResult;
+		}
+		return new SuccessResult("Kayıt başarılı.");
+	}
 
 }

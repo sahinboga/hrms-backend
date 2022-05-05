@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.hrms.hrms.business.abstracts.AuthService;
+import com.hrms.hrms.entities.concretes.Admin;
 import com.hrms.hrms.entities.concretes.Employer;
 import com.hrms.hrms.entities.concretes.JobSeeker;
 import com.hrms.hrms.entities.dtos.UserForLoginDto;
@@ -33,6 +34,12 @@ public class AuthController extends BaseController{
 	@PostMapping("/registerforemployer")
 	public ResponseEntity<?> registerForEmployer(@RequestBody Employer employer) {
 		return Ok(()->this.authService.registerForEmployer(employer));
+		
+	}
+	
+	@PostMapping("/registerforadmin")
+	public ResponseEntity<?> registerForAdmin(@RequestBody Admin admin) {
+		return Ok(()->this.authService.registerForAdmin(admin));
 		
 	}
 	
